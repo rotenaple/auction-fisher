@@ -23,5 +23,3 @@ A utility to notify you via discord webhook if any of the cards you have active 
 
 7. At line 5 of main.js, put in the webhook url, main nation (which will also act as the user agent) as well as the @ you want to be notified (here, your username, etc).
 8. Schedule it with windows task scheduler or crontab or something.
-
-9. ![image](https://github.com/Kractero/auction-observer/assets/115837402/5186fcc7-b0de-4f5c-afe3-e7c94195479d)

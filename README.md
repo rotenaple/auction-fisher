@@ -22,4 +22,4 @@ A utility to notify you via discord webhook if any of the cards you have active 
 ![Webhook](img/Webhook.png)
 
 7. At line 5 of main.js, put in the webhook url, main nation (which will also act as the user agent) as well as the @ you want to be notified (here, your username, etc).
-8. Schedule it with windows task scheduler or crontab or something.
+8. Schedule it with windows task scheduler or crontab or something to run like every 50 minutes.

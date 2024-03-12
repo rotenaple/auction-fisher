@@ -11,7 +11,7 @@ export async function parseXML(url, userAgent) {
 		'User-Agent': userAgent
 	};
 
-	const response = await fetch(url, {
+	const response = await fetch(`${url}&userAgent=${userAgent} using Auction Fisher by Kractero`, {
 		method: 'GET',
 		headers
 	});

@@ -1,27 +1,56 @@
-import { XMLParser } from 'fast-xml-parser';
+import { XMLParser } from "fast-xml-parser";
 
 const parser = new XMLParser({ ignoreAttributes: false });
 
-function sleep(ms) {
-	return new Promise((resolve) => setTimeout(resolve, ms));
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function parseXML(url, userAgent) {
-	const headers = {
-		'User-Agent': userAgent
-	};
+export async function parseXML(url, userAgent, password) {
+  const headers = {
+    "User-Agent": `Used by ${userAgent} with Hare, written by Kractero`,
+  };
 
-	const response = await fetch(`${url}&userAgent=${userAgent} using Auction Fisher by Kractero`, {
-		method: 'GET',
-		headers
-	});
+  if (password) {
+    headers["X-Password"] = password;
+  }
 
-	if (response.status === 429) {
-		await sleep(Number(response.headers.get('retry-after')) * 1000 + 2000)
-		return await parseXML(url, userAgent)
-	}
+  const response = await fetch(
+    `${url}&userAgent=${userAgent} using Hare by Kractero`,
+    {
+      method: "GET",
+      headers,
+    }
+  );
 
-	const xml = await response.text();
-	const xmlObj = parser.parse(xml);
-	return xmlObj;
+  const ratelimitRemaining = Number(
+    response.headers.get("RateLimit-Remaining")
+  );
+  const ratelimitReset = Number(response.headers.get("RateLimit-Reset"));
+  const retryAfter = Number(response.headers.get("Retry-After"));
+
+  if (response.status === 404) {
+    return { status: `failed with error code 404` };
+  }
+
+  if (response.status === 409) {
+    return { status: `failed with error code 409` };
+  }
+
+  if (response.status === 429) {
+    const waitTime =
+      retryAfter > 0 ? retryAfter : ratelimitReset / ratelimitRemaining;
+    await sleep(waitTime * 1000);
+    return await parseXML(url, userAgent, password ? password : "");
+  }
+
+  if (ratelimitRemaining > 0) {
+    await sleep((ratelimitReset / ratelimitRemaining) * 1000);
+  } else {
+    await sleep(ratelimitReset * 1000);
+  }
+
+  const xml = await response.text();
+  const xmlObj = parser.parse(xml);
+  return xmlObj;
 }

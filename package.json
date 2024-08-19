@@ -11,7 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "discord-webhook-node": "^1.1.8",
-    "fast-xml-parser": "^4.3.2"
+    "fast-xml-parser": "^4.4.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0"
+  }
 }

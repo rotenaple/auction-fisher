@@ -5,9 +5,8 @@ This script is based on [Kractero/auction-fisher](https://github.com/Kractero/au
 ## Setup
 
 1. Download the [Node.js](https://nodejs.org/en/download/current) matching your operating system.
-2. When finished, [download the zip](https://codeload.github.com/Kractero/auction-observer/zip/refs/heads/main) and extract the file.
-3. Enter the directory and run npm install.
-4. Create a webhook on a discord server.
+1. Enter the directory and run npm install.
+1. Create a webhook on a discord server.
 
 ## Configuration File Basics
 
